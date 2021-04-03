@@ -1,0 +1,11 @@
+tasks:
+  - command: curl -Lo ./kind "https://github.com/kubernetes-sigs/kind/releases/download/v0.7.0/kind-$(uname)-amd64"
+  - command: chmod +x ./kind
+  - command: sudo mv kind /usr/local/bin
+  - command: wget https://get.helm.sh/helm-v3.1.0-linux-amd64.tar.gz
+  - command: tar xvfz helm-v3.1.0-linux-amd64.tar.gz
+  - command: sudo mv linux-amd64/helm /usr/local/bin
+  - command: helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+  - command: helm repo add codecentric https://codecentric.github.io/helm-charts
+  - command: helm repo update
+  - command: ./infra.sh basic
