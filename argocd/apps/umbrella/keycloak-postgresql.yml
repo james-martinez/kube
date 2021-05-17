@@ -1,22 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: umbrella
-  namespace: dev
+  name: keycloak-postgresql
+  namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   destination:
-    namespace: dev
+    namespace: keycloak
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: apps/umbrella
+    path: argocd/apps/postgresql/dev
     repoURL: https://github.com/vhsanche/kube.git
     targetRevision: HEAD
-    directory:
-      recurse: true
-      jsonnet: {}
   syncPolicy:
     automated:
       prune: true
