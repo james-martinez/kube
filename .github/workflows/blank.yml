@@ -28,4 +28,4 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Install kind
         run: |
-          apt-get install kind
+          sudo apt-get install kind
