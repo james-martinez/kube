@@ -42,8 +42,7 @@ jobs:
           sudo chmod a+xr /usr/local/bin/kubectl
           kind create cluster
           kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
-          sleep 10
-          kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
+          kubectl rollout status deployment/ingress-nginx-controller
           cat << EOF > terraform.tfvars
           registry1_username="${{ secrets.BBUSER }}"
           registry1_password="${{ secrets.BBPASS }}"
