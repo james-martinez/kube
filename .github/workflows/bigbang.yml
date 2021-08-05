@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Deploy bigbang with kind
 
 # Controls when the workflow will run
 on:
@@ -39,8 +39,8 @@ jobs:
           sudo chmod a+xr /usr/local/bin/terraform
           kind create cluster
           cat << EOF > terraform.tfvars
-          registry1_username="REPLACE_ME"
-          registry1_password="REPLACE_ME"
+          registry1_username="${{ secrets.bbuser }}"
+          registry1_password="${{ secrets.bbpass }}"
           EOF
           terraform init -input=false
           terraform apply -input=false -auto-approve
