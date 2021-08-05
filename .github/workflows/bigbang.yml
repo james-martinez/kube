@@ -39,8 +39,8 @@ jobs:
           sudo chmod a+xr /usr/local/bin/terraform
           kind create cluster
           cat << EOF > terraform.tfvars
-          registry1_username="${{ secrets.bbuser }}"
-          registry1_password="${{ secrets.bbpass }}"
+          registry1_username="${{ secrets.BBUSER }}"
+          registry1_password="${{ secrets.BBPASS }}"
           EOF
           terraform init -input=false
           terraform apply -input=false -auto-approve
