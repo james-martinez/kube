@@ -36,8 +36,12 @@ jobs:
           curl -OL https://releases.hashicorp.com/terraform/1.0.4/terraform_1.0.4_linux_amd64.zip
           unzip terraform_1.0.4_linux_amd64.zip
           sudo mv terraform /usr/local/bin/
-          sudo chmod a+xr /usr/local/bin/terraform
+          sudo chmod a+xr /usr/local/bin/terraform 
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          sudo mv kubectl /usr/local/bin/kubectl
+          sudo chmod a+xr /usr/local/bin/kubectl
           kind create cluster
+          kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
           cat << EOF > terraform.tfvars
           registry1_username="${{ secrets.BBUSER }}"
           registry1_password="${{ secrets.BBPASS }}"
