@@ -29,8 +29,18 @@ jobs:
       - name: Install kind
         run: |
           sudo apt-get update
-          sudo apt-get install curl
+          sudo apt-get install curl unzip
           curl -OL https://github.com/kubernetes-sigs/kind/releases/download/v0.11.1/kind-linux-amd64
           sudo mv kind-linux-amd64 /usr/local/bin/kind
           sudo chmod a+xr /usr/local/bin/kind
+          curl -OL https://releases.hashicorp.com/terraform/1.0.4/terraform_1.0.4_linux_amd64.zip
+          unzip terraform_1.0.4_linux_amd64.zip
+          sudo mv terraform /usr/local/bin/
+          sudo chmod a+xr /usr/local/bin/terraform
           kind create cluster
+          cat << EOF > terraform.tfvars
+          registry1_username="REPLACE_ME"
+          registry1_password="REPLACE_ME"
+          EOF
+          terraform init
+          terraform apply
