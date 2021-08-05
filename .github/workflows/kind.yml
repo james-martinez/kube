@@ -44,6 +44,7 @@ jobs:
           kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/master/manifests/namespace.yaml
           kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)" 
           kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/master/manifests/metallb.yaml
+          kubectl apply -f https://kind.sigs.k8s.io/examples/loadbalancer/metallb-configmap.yaml
           kubectl rollout status deployment.apps/controller -n metallb-system
           cat << EOF > terraform.tfvars
           registry1_username="${{ secrets.BBUSER }}"
