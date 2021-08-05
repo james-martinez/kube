@@ -37,6 +37,9 @@ jobs:
           unzip terraform_1.0.4_linux_amd64.zip
           sudo mv terraform /usr/local/bin/
           sudo chmod a+xr /usr/local/bin/terraform
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          sudo mv kubectl /usr/local/bin/kubectl
+          sudo chmod a+xr /usr/local/bin/kubectl
           k3d cluster create --k3s-server-arg "--disable=traefik" -p 80:80@loadbalancer -p 443:443@loadbalancer
           cat << EOF > terraform.tfvars
           registry1_username="${{ secrets.BBUSER }}"
@@ -44,3 +47,4 @@ jobs:
           EOF
           terraform init -input=false
           terraform apply -input=false -auto-approve
+          kubectl get hr,po -A
