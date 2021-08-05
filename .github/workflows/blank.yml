@@ -28,4 +28,9 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Install kind
         run: |
-          sudo apt-get install kind
+          sudo apt-get update
+          sudo apt-get install curl
+          curl -OL https://github.com/kubernetes-sigs/kind/releases/download/v0.11.1/kind-linux-amd64
+          sudo mv kind-linux-amd64 /usr/local/bin/kind
+          sudo chmod a+xr /usr/local/bin/kind
+          kind create cluster
