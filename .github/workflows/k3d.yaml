@@ -50,6 +50,6 @@ jobs:
           kubectl get hr,po -A
       - name: Verify ingress connects
         run: |
-          E_IP=$(kubectl -n istio-system get svc public-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-          curl -svk --resolve minio.bigbang.dev:443:$E_IP https://minio.bigbang.dev
+          IP=$(hostname -i |  head -n1 | cut -d " " -f1)
+          curl -svk --resolve minio.bigbang.dev:443:$IP https://minio.bigbang.dev
           
