@@ -40,19 +40,46 @@ jobs:
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           sudo mv kubectl /usr/local/bin/kubectl
           sudo chmod a+xr /usr/local/bin/kubectl
-          kind create cluster
-          kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/master/manifests/namespace.yaml
-          kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)" 
-          kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/master/manifests/metallb.yaml
-          kubectl apply -f https://kind.sigs.k8s.io/examples/loadbalancer/metallb-configmap.yaml
-          kubectl rollout status deployment.apps/controller -n metallb-system
+          cat <<EOF | kind create cluster --config=-
+          kind: Cluster
+          apiVersion: kind.x-k8s.io/v1alpha4
+          nodes:
+          - role: control-plane
+            kubeadmConfigPatches:
+            - |
+              kind: InitConfiguration
+              nodeRegistration:
+                kubeletExtraArgs:
+                  node-labels: "ingress-ready=true"
+            extraPortMappings:
+            - containerPort: 30000
+              hostPort: 80
+              listenAddress: "127.0.0.1"
+              protocol: TCP
+            - containerPort: 30001
+              hostPort: 443
+              listenAddress: "127.0.0.1"
+              protocol: TCP
+            - containerPort: 30002
+              hostPort: 15443
+              listenAddress: "127.0.0.1"
+              protocol: TCP
+            - containerPort: 30003
+              hostPort: 15021
+              listenAddress: "127.0.0.1"
+              protocol: TCP
+          EOF
           cat << EOF > terraform.tfvars
           registry1_username="${{ secrets.BBUSER }}"
           registry1_password="${{ secrets.BBPASS }}"
           EOF
           terraform init -input=false
-          terraform apply -input=false -auto-approve
+          terraform apply -input=false -auto-approve &
+          kubectl patch svc/public-ingressgateway -n istio-system --patch '{"spec":{"$setElementOrder/ports":[{"port":15021},{"port":80},{"port":443},{"port":15443}],"ports":[{"nodePort":30003,"port":15021},{"nodePort":30000,"port":80},{"nodePort":30001,"port":443},{"nodePort":30002,"port":15443}],"type":"NodePort"}}'
+          kubectl wait hr istio --for=condition=Ready=true  -n bigbang
+          kubectl wait hr minio --for=condition=Ready=true  -n bigbang
           kubectl wait po --for=condition=Ready=true  -l app=public-ingressgateway -n istio-system
+          kubectl wait po --for=condition=Ready=true  -l app=app=minio-minio-minio-instance -n minio
           kubectl get hr,po -A
       - name: Verify ingress connects
         run: |
