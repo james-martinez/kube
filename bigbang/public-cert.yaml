@@ -5,5 +5,5 @@ data:
 kind: Secret
 metadata:
   name: public-cert
-  namespace: bigbang
+  namespace: istio-system
 type: kubernetes.io/tls
