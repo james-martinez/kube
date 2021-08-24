@@ -1,5 +1,8 @@
 hostname: bigbang.dev
 
+networkPolicies:
+  enabled: false
+
 flux:
   interval: 1m
   rollback:
@@ -41,12 +44,7 @@ jaeger:
   enabled: false
 
 istio:
-  # Directly modify chart values for dev workloads
-  values:
-    kiali:
-      dashboard:
-        auth:
-          strategy: "anonymous"   
+  enabled: true
 
 clusterAuditor:
   enabled: false
