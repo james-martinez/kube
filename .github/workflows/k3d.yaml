@@ -50,5 +50,5 @@ jobs:
           kubectl get hr,po -A
       - name: Verify ingress connects
         run: |
-          curl -svk --resolve minio.bigbang.dev:443:"$(hostname -I)" https://minio.bigbang.dev
+          curl -svk --resolve minio.bigbang.dev:443:127.0.0.1 https://minio.bigbang.dev
           
