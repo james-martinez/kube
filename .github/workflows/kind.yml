@@ -89,7 +89,7 @@ jobs:
             sleep 5
           done
           kubectl patch svc/public-ingressgateway -n istio-system --patch '{"spec":{"$setElementOrder/ports":[{"port":15021},{"port":80},{"port":443},{"port":15443}],"ports":[{"nodePort":30003,"port":15021},{"nodePort":30000,"port":80},{"nodePort":30001,"port":443},{"nodePort":30002,"port":15443}],"type":"NodePort"}}'
-          kubectl get hr,po,svc,vs -A
+          kubectl get hr,po,svc -A
       - name: Verify ingress connects
         run: |
           curl -v https://minio.bigbang.dev
