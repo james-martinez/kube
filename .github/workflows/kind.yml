@@ -76,10 +76,10 @@ jobs:
           terraform init -input=false
           terraform apply -input=false -auto-approve
           kubectl get deploy -o name -n flux-system | xargs -n1 -t kubectl rollout status -n flux-system
-          kubectl wait kustomization environment --for=condition=Ready=true  -n bigbang
-          kubectl wait hr bigbang --for=condition=Ready=true  -n bigbang
-          kubectl wait hr istio --for=condition=Ready=true  -n bigbang
-          kubectl wait hr minio --for=condition=Ready=true  -n bigbang
+          kubectl wait kustomization environment --for=condition=Ready=true  -n bigbang --timeout=300s
+          kubectl wait hr bigbang --for=condition=Ready=true  -n bigbang --timeout=300s
+          kubectl wait hr istio --for=condition=Ready=true  -n bigbang --timeout=300s
+          kubectl wait hr minio --for=condition=Ready=true  -n bigbang  --timeout=300s
           kubectl wait po --for=condition=Ready=true  -l app=public-ingressgateway -n istio-system --timeout=300s
           kubectl patch svc/public-ingressgateway -n istio-system --patch '{"spec":{"$setElementOrder/ports":[{"port":15021},{"port":80},{"port":443},{"port":15443}],"ports":[{"nodePort":30003,"port":15021},{"nodePort":30000,"port":80},{"nodePort":30001,"port":443},{"nodePort":30002,"port":15443}],"type":"NodePort"}}'
           kubectl wait po --for=condition=Ready=true  -l app=app=minio-minio-minio-instance -n minio --timeout=300s
