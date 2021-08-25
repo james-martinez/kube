@@ -53,11 +53,13 @@ jobs:
           kubectl wait hr istio --for=condition=Ready=true  -n bigbang --timeout=300s
           kubectl wait hr minio --for=condition=Ready=true  -n bigbang --timeout=300s
           while : ; do
-            kubectl wait po --for=condition=Ready=true  -l app=public-ingressgateway -n istio-system --timeout=300s && break
+            kubectl wait po --for=condition=Ready=true  -l app=public-ingressgateway -n istio-system --timeout=60 && break
+            kubectl describe po -l app=public-ingressgateway -n minio
             sleep 5
           done
           while : ; do
-            kubectl wait po --for=condition=Ready=true  -l app=minio-minio-minio-instance -n minio --timeout=300s && break
+            kubectl wait po --for=condition=Ready=true  -l app=minio-minio-minio-instance -n minio --timeout=60s && break
+            kubectl describe po -l app=minio-minio-minio-instance -n minio
             sleep 5
           done
           kubectl get hr,po,svc -A
