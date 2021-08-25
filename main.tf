@@ -11,9 +11,9 @@ variable "reduce_flux_resources" {
   default = true
 }
 
-output "istio_gw_ip" {
-  value = module.big_bang.external_load_balancer.ip
-}
+# output "istio_gw_ip" {
+#   value = module.big_bang.external_load_balancer.ip
+# }
 module "big_bang" {
   source = "git::https://repo1.dso.mil/platform-one/big-bang/terraform-modules/big-bang-terraform-launcher.git?ref=no-lb-check"
 
