@@ -60,7 +60,7 @@ jobs:
             kubectl wait po --for=condition=Ready=true  -l app=minio-minio-minio-instance -n minio --timeout=300s && break
             sleep 5
           done
-          kubectl get hr,po -A
+          kubectl get hr,po,svc,vs -A
       - name: Verify ingress connects
         run: |
           curl -v https://minio.bigbang.dev
