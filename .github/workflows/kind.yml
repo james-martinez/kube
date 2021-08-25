@@ -76,6 +76,7 @@ jobs:
           terraform init -input=false
           terraform apply -input=false -auto-approve
           kubectl get deploy -o name -n flux-system | xargs -n1 -t kubectl rollout status -n flux-system
+          watch kubectl get hr,po -A
           kubectl wait hr istio --for=condition=Ready=true  -n bigbang
           kubectl wait hr minio --for=condition=Ready=true  -n bigbang
           kubectl wait po --for=condition=Ready=true  -l app=public-ingressgateway -n istio-system --timeout=300s
