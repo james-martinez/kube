@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Deploy bigbang with k3d
+name: Deploy bigbang with microk8s
 
 # Controls when the workflow will run
 on:
@@ -30,9 +30,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install curl unzip
-          curl -OL https://github.com/rancher/k3d/releases/download/v4.4.7/k3d-linux-amd64
-          sudo mv k3d-linux-amd64 /usr/local/bin/k3d
-          sudo chmod a+xr /usr/local/bin/k3d
+          sudo snap install microk8s --classic --channel=1.21
+          microk8s enable metallb
           curl -OL https://releases.hashicorp.com/terraform/1.0.4/terraform_1.0.4_linux_amd64.zip
           unzip terraform_1.0.4_linux_amd64.zip
           sudo mv terraform /usr/local/bin/
@@ -45,6 +44,7 @@ jobs:
           registry1_username="${{ secrets.BBUSER }}"
           registry1_password="${{ secrets.BBPASS }}"
           EOF
+          microk8s status --wait-ready
           terraform init -input=false
           terraform apply -input=false -auto-approve
           kubectl get deploy -o name -n flux-system | xargs -n1 -t kubectl rollout status -n flux-system
@@ -66,4 +66,3 @@ jobs:
       - name: Verify ingress connects
         run: |
           curl -v https://minio.bigbang.dev
-          
