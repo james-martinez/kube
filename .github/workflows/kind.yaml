@@ -62,6 +62,7 @@ jobs:
               protocol: TCP
           EOF
           kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-frr.yaml
+          sleep 5
           kubectl wait --namespace metallb-system \
                           --for=condition=ready pod \
                           --selector=app=metallb \
