@@ -62,10 +62,6 @@ jobs:
               protocol: TCP
           EOF
           kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-frr.yaml
-          kubectl wait --namespace metallb-system \
-                          --for=condition=ready Deployment \
-                          --selector=component=controller \
-                          --timeout=90s 
           kubectl apply -f https://kind.sigs.k8s.io/examples/loadbalancer/metallb-config.yaml
           cat << EOF > terraform.tfvars
           registry1_username="${{ secrets.BBUSER }}"
