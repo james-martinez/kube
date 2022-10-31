@@ -2,7 +2,6 @@ resources:
   - git::https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base/flux/?ref=1.45.0
   - git::https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base/?ref=1.45.0
   - start.yaml
-  - public-cert.yaml
 
 configMapGenerator:
   - name: common
@@ -10,6 +9,13 @@ configMapGenerator:
     behavior: merge
     files:
       - values.yaml
+
+secretGenerator:
+  - name: common-bb
+    namespace: bigbang
+    behavior: merge
+    files:
+      - values.yaml=https://repo1.dso.mil/platform-one/big-bang/customers/template/-/raw/main/base/bigbang-dev-cert.yaml
 
 patchesStrategicMerge:
 - |-
