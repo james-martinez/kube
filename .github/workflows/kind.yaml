@@ -30,17 +30,17 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install curl unzip
-          curl -OL https://github.com/kubernetes-sigs/kind/releases/download/v0.11.1/kind-linux-amd64
+          curl -OL https://github.com/kubernetes-sigs/kind/releases/download/v0.17.0/kind-linux-amd64
           sudo mv kind-linux-amd64 /usr/local/bin/kind
           sudo chmod a+xr /usr/local/bin/kind
-          curl -OL https://releases.hashicorp.com/terraform/1.0.4/terraform_1.0.4_linux_amd64.zip
-          unzip terraform_1.0.4_linux_amd64.zip
+          curl -OL https://releases.hashicorp.com/terraform/1.3.3/terraform_1.3.3_linux_amd64.zip
+          unzip terraform_1.3.3_linux_amd64.zip
           sudo mv terraform /usr/local/bin/
           sudo chmod a+xr /usr/local/bin/terraform 
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           sudo mv kubectl /usr/local/bin/kubectl
           sudo chmod a+xr /usr/local/bin/kubectl
-          cat <<EOF | kind create cluster --memory 8192 --cpus 4 --config=-
+          cat <<EOF | kind create cluster --config=-
           kind: Cluster
           apiVersion: kind.x-k8s.io/v1alpha4
           nodes:
