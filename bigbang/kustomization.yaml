@@ -1,6 +1,7 @@
-bases:
-  - git::https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base?ref=1.45.0
 resources:
+  - git::https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base/flux/?ref=1.45.0
+  - git::https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base/?ref=1.45.0
+  - repo.yaml
   - public-cert.yaml
 
 configMapGenerator:
@@ -12,7 +13,7 @@ configMapGenerator:
 
 patchesStrategicMerge:
 - |-
-  apiVersion: source.toolkit.fluxcd.io/v1beta1
+  apiVersion: source.toolkit.fluxcd.io/v1beta2
   kind: GitRepository
   metadata:
     name: bigbang
