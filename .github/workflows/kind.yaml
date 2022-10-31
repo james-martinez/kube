@@ -89,4 +89,4 @@ jobs:
           kubectl get hr,po,svc -A
       - name: Verify ingress connects
         run: |
-          curl -v https://minio.bigbang.dev
+          curl -v https://kiali.bigbang.dev
