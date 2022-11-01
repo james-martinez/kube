@@ -59,7 +59,6 @@ jobs:
           kubectl rollout status deployment/controller -n metallb-system --timeout 120s
           kubectl rollout status daemonset/speaker -n metallb-system --timeout 120s
           kubectl apply -f https://kind.sigs.k8s.io/examples/loadbalancer/metallb-config.yaml
-          EOF
           cat << EOF > terraform.tfvars
           registry1_username="${{ secrets.BBUSER }}"
           registry1_password="${{ secrets.BBPASS }}"
