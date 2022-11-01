@@ -59,6 +59,7 @@ jobs:
               hostPort: 443
               protocol: TCP
           EOF
+          docker network inspect -f '{{.IPAM.Config}}' kind
           kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-frr.yaml
           kubectl rollout status deployment/controller -n metallb-system --timeout 120s
           kubectl rollout status daemonset/speaker -n metallb-system --timeout 120s
