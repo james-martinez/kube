@@ -3,9 +3,6 @@ resources:
   - git::https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base/?ref=1.45.0
   - start.yaml
 
-patchesStrategicMerge:
-  - https://repo1.dso.mil/platform-one/big-bang/customers/template/-/raw/main/base/bigbang-dev-cert.yaml
-
 configMapGenerator:
   - name: common
     namespace: bigbang
