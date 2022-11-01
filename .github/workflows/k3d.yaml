@@ -60,5 +60,5 @@ jobs:
           kubectl get hr,po,svc -A
       - name: Verify ingress connects
         run: |
-          curl -v https://kiali.bigbang.dev
+          curl -v https://kiali.localhost.direct
           
