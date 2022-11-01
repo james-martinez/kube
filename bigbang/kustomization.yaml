@@ -10,12 +10,12 @@ configMapGenerator:
     files:
       - values.yaml
 
-# secretGenerator:
-#   - name: common-bb
-#     namespace: bigbang
-#     behavior: merge
-#     files:
-#       - values.yaml=https://repo1.dso.mil/platform-one/big-bang/customers/template/-/raw/main/base/bigbang-dev-cert.yaml
+secretGenerator:
+  - name: common-bb
+    namespace: bigbang
+    behavior: merge
+    files:
+      - values.yaml=https://repo1.dso.mil/platform-one/big-bang/customers/template/-/raw/main/base/bigbang-dev-cert.yaml
 
 patchesStrategicMerge:
 - |-
