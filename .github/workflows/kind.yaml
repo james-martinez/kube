@@ -63,8 +63,20 @@ jobs:
           EOF
           kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-frr.yaml
           kubectl rollout status deployment/controller -n metallb-system --timeout 120s
-          kubectl rollout status daemonset/speaker -n metallb-system --timeout 120s
-          kubectl apply -f https://kind.sigs.k8s.io/examples/loadbalancer/metallb-config.yaml
+          cat <<EOF | kubectl apply -f -
+          apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            namespace: metallb-system
+            name: config
+          data:
+            config: |
+              address-pools:
+              - name: addresspool
+                protocol: layer2
+                addresses:
+                - 172.18.0.1-172.18.0.254
+          EOF
           cat << EOF > terraform.tfvars
           registry1_username="${{ secrets.BBUSER }}"
           registry1_password="${{ secrets.BBPASS }}"
