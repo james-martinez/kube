@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: common-bb
+stringData:
+    values.yaml: ENC[AES256_GCM,data:TwuMH2tWxFekKj6/3bXat/pZXUyXaFQh0uqrSXs753FCs26EBOZ1cvbrspRzkqCfev6aRYq789EIkAVCludf6elkZoKNz8AaUCTADOPHWzWekU/FFQXXSnPtOAeml2klbo1MXHmPJiSqxnreYdwpcl3Yw+p3ZSWyH9bZ7xq6vKdtLbhoA8k=,iv:civ+EVbhODVZq7Dt+zU3hCWIXM9i2cvbScXBuDT1lDI=,tag:1iEQrwTTKpn3WSSkhtGlEw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1dqtw9t2qe9pr0wryazu4cvqtptnsva48m50yzvz0mfsdkw54wycql7h7v0
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSArdzkwT3dEd25aQ1l5eEpS
+            VDFqcWE1RjdCcVN3cTAvUUFMY0JLblJSUUJ3CnJicFFXLy9BZVo3Z29zd3pmSTVo
+            SVltWFN6ci8vNzFMYmROUGpodjhuZVUKLS0tIDl2U3VsNTJrRVJKL1NueU1pSlZx
+            Qkt1MkNadGpzZnJPN0kvVktYSHFJSncK4/O7cDDtmnsDmAa/DL/kzIVJzsgXcBKH
+            rcFj1Yy2TwfoX0g/VVtcDZnU19Luk3dR0J9o1mhrnLtBZj7fcd1bFw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-11-01T14:07:51Z"
+    mac: ENC[AES256_GCM,data:Ewtqad+2es+AVmIGWQVg1/Ob1n5aX4/iwNxX7zB84rgLryss/Q+w/KU9Whzi4ZZG6Ri/5xc44k9OkIB47L7e/ep4hXJ5FVs38e9tq088p+Ml8bzyAoZGRCiMwUUeoM29fNLkkm/E0jegi472QdukTx5IwWPJZImbYSC+VONzcsE=,iv:Nix9vXdlnqXh9f9FkLNjGZIRW2WcsbSGYx++vswSjvc=,tag:1CemDpfaPAlyUNr5k4cm0Q==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
