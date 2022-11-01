@@ -22,3 +22,7 @@ spec:
     name: environment-repo
   path: ./bigbang
   prune: true
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
