@@ -5,12 +5,16 @@ resources:
   - start.yaml
 patches:
   - patch: |-
+      - op: add
+        path: /metadata/namespace
+        value: bigbang    
+    target:
       apiVersion: v1
       kind: Secret
       metadata:
         name: common-bb
-        namespace: bigbang
-
+      
+      
 configMapGenerator:
   - name: common
     namespace: bigbang
