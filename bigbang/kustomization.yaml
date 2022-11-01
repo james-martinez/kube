@@ -15,8 +15,7 @@ secretGenerator:
     namespace: bigbang
     behavior: merge
     files:
-      - https://repo1.dso.mil/platform-one/big-bang/customers/template/-/raw/main/base/bigbang-dev-cert.yaml
-      - reg-creds.enc.yaml
+      - common-bb.yaml
 
 patchesStrategicMerge:
 - |-
