@@ -45,19 +45,13 @@ jobs:
           apiVersion: kind.x-k8s.io/v1alpha4
           nodes:
           - role: control-plane
-            kubeadmConfigPatches:
-            - |
-              kind: InitConfiguration
-              nodeRegistration:
-                kubeletExtraArgs:
-                  node-labels: "ingress-ready=true"
             extraPortMappings:
-            - hostPort: 80
-              containerPort: 80
+            - containerPort: 80
+              hostPort: 80
               listenAddress: "127.0.0.1"
               protocol: TCP
-            - hostPort: 443
-              containerPort: 443
+            - containerPort: 443
+              hostPort: 443
               listenAddress: "127.0.0.1"
               protocol: TCP
           EOF
