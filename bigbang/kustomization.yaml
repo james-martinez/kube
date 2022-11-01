@@ -16,7 +16,7 @@ secretGenerator:
     behavior: merge
     files:
       - values.yaml=https://repo1.dso.mil/platform-one/big-bang/customers/template/-/raw/main/base/bigbang-dev-cert.yaml
-      - values.yaml=reg-creds.enc.yaml
+      - reg-creds.enc.yaml
 
 patchesStrategicMerge:
 - |-
