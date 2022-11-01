@@ -9,7 +9,9 @@ configMapGenerator:
     behavior: merge
     files:
       - values.yaml
-  - name: common
+      
+secretGenerator:
+  - name: common-bb
     namespace: bigbang
     behavior: merge
     files:
