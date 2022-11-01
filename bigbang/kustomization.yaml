@@ -1,20 +1,11 @@
 resources:
   - git::https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base/flux/?ref=1.45.0
   - git::https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base/?ref=1.45.0
-  - https://repo1.dso.mil/platform-one/big-bang/customers/template/-/raw/main/base/bigbang-dev-cert.yaml
   - start.yaml
-patches:
-  - patch: |-
-      - op: add
-        path: /metadata/namespace
-        value: bigbang    
-    target:
-      apiVersion: v1
-      kind: Secret
-      metadata:
-        name: common-bb
-      
-      
+
+patchesStrategicMerge:
+  - https://repo1.dso.mil/platform-one/big-bang/customers/template/-/raw/main/base/bigbang-dev-cert.yaml
+
 configMapGenerator:
   - name: common
     namespace: bigbang
