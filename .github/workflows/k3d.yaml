@@ -52,7 +52,7 @@ jobs:
           kubectl wait kustomization environment --for=condition=Ready=true  -n bigbang --timeout=300s
           kubectl wait hr bigbang --for=condition=Ready=true  -n bigbang --timeout=300s
           kubectl wait hr istio --for=condition=Ready=true  -n bigbang --timeout=300s
-          kubectl wait hr kiali --for=condition=Ready=true  -n bigbang --timeout=300s
+          kubectl wait hr minio --for=condition=Ready=true  -n bigbang --timeout=300s
           while : ; do
             kubectl wait po --for=condition=Ready=true  -l app=public-ingressgateway -n istio-system --timeout=60s && break
             sleep 5
@@ -60,5 +60,5 @@ jobs:
           kubectl get hr,po,svc -A
       - name: Verify ingress connects
         run: |
-          curl -v https://kiali.localhost.direct
+          curl -v https://minio.localhost.direct
           
