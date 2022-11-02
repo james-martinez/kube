@@ -47,7 +47,7 @@ jobs:
           EOF
           terraform init -input=false
           terraform apply -input=false -auto-approve
-          cat "${{ secrets.AGEKEY }}" | kubectl create secret generic sops-age --namespace=flux-system --from-file=age.agekey=/dev/stdin
+          echo "${{ secrets.AGEKEY }}" | kubectl create secret generic sops-age --namespace=flux-system --from-file=age.agekey=/dev/stdin
           kubectl get deploy -o name -n flux-system | xargs -n1 -t kubectl rollout status -n flux-system
           kubectl wait kustomization environment --for=condition=Ready=true  -n bigbang --timeout=300s
           kubectl wait hr bigbang --for=condition=Ready=true  -n bigbang --timeout=300s
