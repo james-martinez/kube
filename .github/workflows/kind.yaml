@@ -52,10 +52,10 @@ jobs:
                 kubeletExtraArgs:
                   node-labels: "ingress-ready=true"
             extraPortMappings:
-            - containerPort: 80
+            - containerPort: 30800
               hostPort: 80
               protocol: TCP
-            - containerPort: 443
+            - containerPort: 30443
               hostPort: 443
               protocol: TCP
           EOF
@@ -70,7 +70,7 @@ jobs:
             namespace: metallb-system
           spec:
             addresses:
-            - 172.18.0.200-172.18.0.250
+            - 172.18.255.200-172.18.255.250
           ---
           apiVersion: metallb.io/v1beta1
           kind: L2Advertisement
@@ -84,12 +84,13 @@ jobs:
           EOF
           terraform init -input=false
           terraform apply -input=false -auto-approve
-          cat "${{ secrets.AGEKEY }}" | kubectl create secret generic sops-age --namespace=flux-system --from-file=age.agekey=/dev/stdin
+          echo "${{ secrets.AGEKEY }}" | kubectl create secret generic sops-age --namespace=flux-system --from-file=age.agekey=/dev/stdin
           kubectl get deploy -o name -n flux-system | xargs -n1 -t kubectl rollout status -n flux-system
           kubectl wait kustomization environment --for=condition=Ready=true  -n bigbang --timeout=300s
           kubectl wait hr bigbang --for=condition=Ready=true  -n bigbang --timeout=300s
           kubectl wait hr istio --for=condition=Ready=true  -n bigbang --timeout=300s
           kubectl wait hr kiali --for=condition=Ready=true  -n bigbang  --timeout=600s
+          kubectl get svc -n istio-system -o wide
           while : ; do
             kubectl wait po --for=condition=Ready=true  -l app=public-ingressgateway -n istio-system --timeout=60s && break
             sleep 5
