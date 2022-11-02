@@ -382,7 +382,7 @@ jaeger:
 
 kiali:
   # -- Toggle deployment of Kiali.
-  enabled: true
+  enabled: false
   git:
     repo: https://repo1.dso.mil/platform-one/big-bang/apps/core/kiali.git
     path: "./chart"
@@ -923,7 +923,7 @@ addons:
 
   minio:
     # -- Toggle deployment of minio.
-    enabled: false
+    enabled: true
     git:
       repo: https://repo1.dso.mil/platform-one/big-bang/apps/application-utilities/minio.git
       path: "./chart"
