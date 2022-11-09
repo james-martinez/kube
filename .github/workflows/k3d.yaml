@@ -44,14 +44,14 @@ jobs:
           k3d cluster create --k3s-arg "--disable=traefik@server:0" -p 80:80@loadbalancer -p 443:443@loadbalancer
           kubectl create namespace flux-system
           kubectl create secret docker-registry private-registry  --docker-server="registry1.dso.mil" --docker-username="$registry1_user" --docker-password="$registry1_token" --docker-email="$registry1_email" -n flux-system
+          echo "${{ secrets.AGEKEY }}" | kubectl create secret generic sops-age --namespace=flux-system --from-file=age.agekey=/dev/stdin
           kubectl apply -k "https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base/flux?ref=master"
           kubectl create namespace bigbang
           curl -sO https://repo1.dso.mil/platform-one/big-bang/bigbang/-/raw/master/chart/ingress-certs.yaml
           yq ea '. as $item ireduce ({}; . * $item )' bigbang/values.yaml  ingress-certs.yaml > values-merged.yaml
           yq  '.registryCredentials.username = strenv(registry1_user) | .registryCredentials.password = strenv(registry1_token) | .registryCredentials.email = strenv(registry1_email)' values-merged.yaml >  values-filled.yaml
           kubectl create secret generic terraform -n bigbang --from-file=values.yaml=values-filled.yaml
-          kubectl apply -k "https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base?ref=main"
-          echo "${{ secrets.AGEKEY }}" | kubectl create secret generic sops-age --namespace=flux-system --from-file=age.agekey=/dev/stdin
+          kubectl apply -k "https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base?ref=master"
           kubectl get deploy -o name -n flux-system | xargs -n1 -t kubectl rollout status -n flux-system
           kubectl wait kustomization environment --for=condition=Ready=true  -n bigbang --timeout=300s
           kubectl wait hr bigbang --for=condition=Ready=true  -n bigbang --timeout=300s
@@ -60,5 +60,5 @@ jobs:
           kubectl get hr,po,svc -A
       - name: Verify ingress connects
         run: |
-          curl -v https://minio.localhost.direct
+          curl -v https://minio.bigbang.dev
           
