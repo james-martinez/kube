@@ -53,7 +53,6 @@ jobs:
           kubectl create secret generic terraform -n bigbang --from-file=values.yaml=values-filled.yaml
           kubectl apply -k "https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base?ref=master"
           kubectl get deploy -o name -n flux-system | xargs -n1 -t kubectl rollout status -n flux-system
-          kubectl wait kustomization environment --for=condition=Ready=true  -n bigbang --timeout=300s
           kubectl wait hr bigbang --for=condition=Ready=true  -n bigbang --timeout=300s
           kubectl wait hr istio --for=condition=Ready=true  -n bigbang --timeout=300s
           kubectl wait hr minio --for=condition=Ready=true  -n bigbang --timeout=300s
