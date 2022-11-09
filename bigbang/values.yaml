@@ -32,3 +32,10 @@ addons:
     enabled: false
   minio:
     enabled: true
+   minio:
+    enabled: true
+    values:
+      tenant:
+        pools:
+          - servers: 1
+            volumesPerServer: 1
