@@ -32,8 +32,6 @@ addons:
     enabled: false
   minio:
     enabled: true
-   minio:
-    enabled: true
     values:
       tenant:
         pools:
